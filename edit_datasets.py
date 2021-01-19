@@ -94,7 +94,7 @@ def uppercase_letters(text):
 
 
 print('start')
-df['class'] = df['class'].apply(index_class)
+df['target'] = df['target'].apply(index_class)
 print('index classes')
 df['text'] = df['text'].apply(str)
 print('ensure strings')

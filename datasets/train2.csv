@@ -1,4 +1,4 @@
-;class;text;chars;word_count;hash_count;punctuation_count;punctuation;uppercase
+;target;text;chars;word_count;hash_count;punctuation_count;punctuation;uppercase
 0;2; id have responded if i were going;36;7;0;2;['`', ','];2
 1;1; sooo sad i will miss you here in san diego;46;10;0;3;['!', '!', '!'];7
 2;1;my boss is bullying me;25;5;0;3;['.', '.', '.'];0
