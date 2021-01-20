@@ -16,3 +16,9 @@ with open('models/model.pkl', 'rb') as f:
 
 def predict(text: str):
     return model.predict(vectorizer.transform([text]))
+
+
+inp = None
+while inp != 'c':
+    inp = input('>> ')
+    print('>> ' + predict(inp)[0])
