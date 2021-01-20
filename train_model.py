@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 
 # read the csv with all data
-df = pd.read_csv('datasets/all/inida_covid_tweets.csv', sep=';')
+df = pd.read_csv('datasets/train2.csv', sep=';')
 # ensure text is string
 df['text'] = df.text.apply(str)
 df['target'] = df.target.apply(str)
