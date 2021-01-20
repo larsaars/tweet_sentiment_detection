@@ -2,7 +2,8 @@ import pickle as pkl
 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
-import text_helper
+import text_helper as txth
+import os
 
 vectorizer: CountVectorizer
 model: LogisticRegression
@@ -20,5 +21,9 @@ def predict(text: str):
 
 inp = None
 while inp != 'c':
-    inp = input('>> ')
-    print('>> ' + predict(inp)[0])
+    inp = txth.transform(input('>> '))
+
+    if inp == 'cls':
+        os.system('cls')
+
+    print('<< ' + predict(inp)[0])
