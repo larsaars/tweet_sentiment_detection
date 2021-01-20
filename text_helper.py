@@ -66,12 +66,17 @@ def remove_symbols(text):
     # only keep alphabet
     new = ''
     for letter in text:
-        for c in 'abcdefghijklmnopqrstuvwxyz ':
+        for c in 'abcdefghijklmnopqrstuvwxyz .?!':
             if letter == c:
                 new += c
                 break
 
-    return re.sub(r' +', ' ', new)
+    new = re.sub(r' +', ' ', new.replace('\n', ' '))
+
+    if new.startswith(' '):
+        new = new[1:]
+
+    return new
 
 
 def uppercase_letters(text):
@@ -84,4 +89,5 @@ def uppercase_letters(text):
 
 def transform(text) -> str:
     return remove_symbols(remove_urls(
-        remove_hashtags(replace_username(remove_number(remove_punctuations(str.lower(emoji_to_text(str(text)))))))))
+        replace_username(
+            remove_number(remove_punctuations(str.lower(emoji_to_text(str(text))))))))
