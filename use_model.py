@@ -25,5 +25,5 @@ while inp != 'c':
 
     if inp == 'cls':
         os.system('cls')
-
-    print('<< ' + predict(inp)[0])
+    else:
+        print('<< ' + predict(inp)[0])
