@@ -1,7 +1,6 @@
 from nltk.corpus import stopwords
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
 import pandas as pd
 import pickle as pkl
 
@@ -9,7 +8,7 @@ from sklearn.linear_model import LogisticRegression
 
 # read the csv with all data
 df = pd.read_csv('datasets/train2.csv', sep=';')
-# ensure text is string
+# ensure text is string (and target)
 df['text'] = df.text.apply(str)
 df['target'] = df.target.apply(str)
 # init list of stopwords
@@ -18,7 +17,7 @@ stop = list(stopwords.words('english'))
 # after that the whole model will be recalculated
 train_split, validation_split = train_test_split(df, test_size=0.2, random_state=0, stratify=df.target.values)
 # count-vectorize words in the given ngram_range
-vectorizer = TfidfVectorizer()  # CountVectorizer(decode_error='replace', stop_words=stop, ngram_range=(1, 2))
+vectorizer = CountVectorizer(decode_error='replace', stop_words=stop, ngram_range=(1, 2))
 # fit the vectorizer (etc. for later whole model training)
 final_X_train = vectorizer.fit_transform(df.text.values.astype('U'))
 final_y_train = df.target

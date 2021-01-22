@@ -7,7 +7,7 @@ def word_count(sent):
 
 
 def remove_urls(sent):
-    return re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', sent)
+    return re.sub(r'(?:(?:https?|ftp)://)?[\w/\-?=%.]+\.[\w/\-&?=%.]+', '', sent)
 
 
 def emoji_count(sent):
@@ -33,8 +33,7 @@ def remove_hashtags(text):
 
 
 def extract_username(sent):
-    usernames = re.findall(r'@[A-Za-z0-9_$]*', sent)
-    return usernames
+    return re.findall(r'@[A-Za-z0-9_$]*', sent)
 
 
 def replace_username(sent):
@@ -45,7 +44,11 @@ def replace_username(sent):
     return sent
 
 
-def remove_number(text):
+def remove_usernames(text):
+    return re.sub(r'@[A-Za-z0-9_$]*', '', text)
+
+
+def remove_numbers(text):
     return re.sub(r'#[0-9]+', '', text)
 
 
@@ -62,19 +65,19 @@ def remove_punctuations(text):
     return re.sub(r'[.?"\'`,\-!:;()\[\]\\/“”]+?', '.', text)
 
 
-def remove_symbols(text):
+def keep_characters(text):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz .,?!_1234567890'
     # only keep alphabet
     new = ''
+    # check every letter if can be accepted (is in language)
     for letter in text:
-        for c in 'abcdefghijklmnopqrstuvwxyz .?!':
+        for c in alphabet:
             if letter == c:
                 new += c
                 break
 
-    new = re.sub(r' +', ' ', new.replace('\n', ' '))
-
-    if new.startswith(' '):
-        new = new[1:]
+    # remove multiple whitespaces
+    new = re.sub(r'\s+', ' ', new.replace('\n', ' '))
 
     return new
 
@@ -88,6 +91,15 @@ def uppercase_letters(text):
 
 
 def transform(text) -> str:
-    return remove_symbols(remove_urls(
-        replace_username(
-            remove_number(remove_punctuations(str.lower(emoji_to_text(str(text))))))))
+    # make sure text is a lowercase string
+    text = str(text).lower()
+    # emojis to text
+    text = emoji_to_text(text)
+    # remove all urls
+    text = remove_urls(text)
+    # remove the username (everything beginning with '@')
+    text = remove_usernames(text)
+    # keep only the important characters now
+    text = keep_characters(text)
+    # remove all whitespaces at the start of the string and return
+    return text.strip()
